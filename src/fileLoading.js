@@ -44,7 +44,6 @@ const loadFavIcon = (req, res, file, type) => {
 };
 
 const loadPage = (req, res, file, type) => {
-  console.log(file);
   // Error handling is being done in the 'loadFile' function
   fs.readFile(file, (err, data) => {
     res.writeHead(200, { 'Content-Type': type });
@@ -53,12 +52,11 @@ const loadPage = (req, res, file, type) => {
   });
 };
 
-const loadFile = (req, res, loc, type) => {
+module.exports.loadFile = (req, res, loc, type) => {
   const file = path.resolve(__dirname, loc);
 
   fs.stat(file, (err, stats) => {
     if (err) {
-      console.log('Error loading file...', err);
       if (err.code === 'ENOENT') res.writeHead(404);
       return res.end();
     }
@@ -73,13 +71,8 @@ const loadFile = (req, res, loc, type) => {
       case 'image/x-icon':
         return loadFavIcon(req, res, file, type);
       default:
-        console.log('INVALID FILE TYPE PROVIDED FOR FUNCTION LOADFILE');
         res.writeHead(404, { 'Content-Type': 'plain' });
         return res.end('Invalid Content Type Specified');
     }
   });
-};
-
-module.exports = {
-  loadFile,
 };

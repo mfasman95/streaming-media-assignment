@@ -4,7 +4,6 @@ const fileLoader = require('./fileLoading');
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
 const onRequest = (req, res) => {
-  console.log(req.url);
   switch (req.url) {
     case '/':
       fileLoader.loadFile(req, res, '../client/client.html', 'text/html');
