@@ -61,17 +61,15 @@ module.exports.loadFile = (req, res, loc, type) => {
     }
 
     switch (type) {
-      case 'video/mp4':
-        return streamData(req, res, file, type, stats);
-      case 'audio/mpeg':
-        return streamData(req, res, file, type, stats);
-      case 'text/html':
-        return loadPage(req, res, file, type);
-      case 'image/x-icon':
-        return loadFavIcon(req, res, file, type);
+      case 'video/mp4': return streamData(req, res, file, type, stats);
+      case 'audio/mpeg': return streamData(req, res, file, type, stats);
+      case 'text/html': return loadPage(req, res, file, type);
+      case 'image/x-icon': return loadFavIcon(req, res, file, type);
       default:
+        // Handle an invalid content type
         res.writeHead(404, { 'Content-Type': 'plain' });
-        return res.end('Invalid Content Type Specified');
+        res.write('Invalid Content Type Specified');
+        return res.end();
     }
   });
 };
