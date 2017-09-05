@@ -67,7 +67,7 @@ module.exports.loadFile = (req, res, loc, type) => {
       case 'image/x-icon': return loadFavIcon(req, res, file, type);
       default:
         // Handle an invalid content type
-        res.writeHead(404, { 'Content-Type': 'plain' });
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
         res.write('Invalid Content Type Specified');
         return res.end();
     }
