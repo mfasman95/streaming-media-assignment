@@ -1,8 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-
-const streamData = (req, res, file, stats, type) => {
+const streamData = (req, res, file, type, stats) => {
   const range = req.headers.range;
 
   if (!range) return res.writeHead(416);
@@ -63,9 +62,9 @@ module.exports.loadFile = (req, res, loc, type) => {
 
     switch (type) {
       case 'video/mp4':
-        return streamData(req, res, file, stats, type);
+        return streamData(req, res, file, type, stats);
       case 'audio/mpeg':
-        return streamData(req, res, file, stats, type);
+        return streamData(req, res, file, type, stats);
       case 'text/html':
         return loadPage(req, res, file, type);
       case 'image/x-icon':
